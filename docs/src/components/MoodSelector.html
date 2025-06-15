@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>MoodSelector.tsx</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="../../docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="../App.html">
+                  src/App.tsx
+                </a>
+              
+                
+                <a class="source" href="DailyNote.html">
+                  src/components/DailyNote.tsx
+                </a>
+              
+                
+                <a class="source" href="EditMoodModal.html">
+                  src/components/EditMoodModal.tsx
+                </a>
+              
+                
+                <a class="source" href="MoodSelector.html">
+                  src/components/MoodSelector.tsx
+                </a>
+              
+                
+                <a class="source" href="MoodTrendChart.html">
+                  src/components/MoodTrendChart.tsx
+                </a>
+              
+                
+                <a class="source" href="SaveButton.html">
+                  src/components/SaveButton.tsx
+                </a>
+              
+                
+                <a class="source" href="WeeklyOverview.html">
+                  src/components/WeeklyOverview.tsx
+                </a>
+              
+                
+                <a class="source" href="../hooks/useMoodStorage.html">
+                  src/hooks/useMoodStorage.ts
+                </a>
+              
+                
+                <a class="source" href="../main.html">
+                  src/main.tsx
+                </a>
+              
+                
+                <a class="source" href="../types/mood.html">
+                  src/types/mood.ts
+                </a>
+              
+                
+                <a class="source" href="../utils/moodHelpers.html">
+                  src/utils/moodHelpers.ts
+                </a>
+              
+                
+                <a class="source" href="../vite-env.d.html">
+                  src/vite-env.d.ts
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>MoodSelector.tsx</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="sswrap ">
+                <a class="ss" href="#section-1">&#x00a7;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>;
+<span class="hljs-keyword">import</span> { getMoodEmoji, getMoodColor, getMoodColorRing, getMoodLabel } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;../utils/moodHelpers&#x27;</span>;
+
+<span class="hljs-keyword">interface</span> <span class="hljs-title class_">MoodSelectorProps</span> {
+  <span class="hljs-attr">selectedMood</span>: <span class="hljs-built_in">number</span>; <span class="hljs-comment">// Currently selected mood (0 = none, 1-5 = mood scale)</span>
+  <span class="hljs-attr">onMoodSelect</span>: <span class="hljs-function">(<span class="hljs-params">mood: <span class="hljs-built_in">number</span></span>) =&gt;</span> <span class="hljs-built_in">void</span>; <span class="hljs-comment">// Callback when user selects a mood</span>
+}
+
+<span class="hljs-comment">/**
+ * Component that displays 5 emoji buttons for mood selection
+ * Shows visual feedback for the selected mood with colors and labels
+ */</span>
+<span class="hljs-keyword">const</span> <span class="hljs-title class_">MoodSelector</span>: <span class="hljs-title class_">React</span>.<span class="hljs-property">FC</span>&lt;<span class="hljs-title class_">MoodSelectorProps</span>&gt; = <span class="hljs-function">(<span class="hljs-params">{ selectedMood, onMoodSelect }</span>) =&gt;</span> {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="sswrap ">
+                <a class="ss" href="#section-2">&#x00a7;</a>
+              </div>
+              <p>Array of mood values (1=terrible, 2=bad, 3=okay, 4=good, 5=great)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">const</span> moods = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>];
+
+  <span class="hljs-keyword">return</span> (
+    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;space-y-4&quot;</span>&gt;</span>
+      {/* Instruction text */}
+      <span class="hljs-tag">&lt;<span class="hljs-name">h3</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;text-lg font-semibold text-gray-800 text-center&quot;</span>&gt;</span>
+        How are you feeling today?
+      <span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span>
+      
+      {/* Row of mood selection buttons */}
+      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;flex justify-center space-x-3&quot;</span>&gt;</span>
+        {moods.map((mood) =&gt; (
+          <span class="hljs-tag">&lt;<span class="hljs-name">button</span>
+            <span class="hljs-attr">key</span>=<span class="hljs-string">{mood}</span>
+            <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> onMoodSelect(mood)}
+            className={`
+              relative w-16 h-16 rounded-full transition-all duration-300 transform hover:scale-110
+              ${selectedMood === mood 
+                ? `${getMoodColor(mood)} ring-4 ${getMoodColorRing(mood)} ring-opacity-50 scale-110` 
+                : &#x27;bg-gray-100 hover:bg-gray-200&#x27;
+              }
+              flex items-center justify-center text-2xl
+              shadow-md hover:shadow-lg
+            `}
+          &gt;
+            {/* Emoji for this mood level */}
+            <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;select-none&quot;</span>&gt;</span>
+              {getMoodEmoji(mood)}
+            <span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+            
+            {/* Show mood label below selected button */}
+            {selectedMood === mood &amp;&amp; (
+              <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;absolute -bottom-8 left-1/2 transform -translate-x-1/2&quot;</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;text-xs font-medium text-gray-600 whitespace-nowrap&quot;</span>&gt;</span>
+                  {getMoodLabel(mood)}
+                <span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+              <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+            )}
+          <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+        ))}
+      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+      
+      {/* Spacer to account for the label that appears below selected mood */}
+      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;h-6&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+};
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">MoodSelector</span>;</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

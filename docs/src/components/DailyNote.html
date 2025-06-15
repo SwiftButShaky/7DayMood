@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>DailyNote.tsx</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="../../docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="../App.html">
+                  src/App.tsx
+                </a>
+              
+                
+                <a class="source" href="DailyNote.html">
+                  src/components/DailyNote.tsx
+                </a>
+              
+                
+                <a class="source" href="EditMoodModal.html">
+                  src/components/EditMoodModal.tsx
+                </a>
+              
+                
+                <a class="source" href="MoodSelector.html">
+                  src/components/MoodSelector.tsx
+                </a>
+              
+                
+                <a class="source" href="MoodTrendChart.html">
+                  src/components/MoodTrendChart.tsx
+                </a>
+              
+                
+                <a class="source" href="SaveButton.html">
+                  src/components/SaveButton.tsx
+                </a>
+              
+                
+                <a class="source" href="WeeklyOverview.html">
+                  src/components/WeeklyOverview.tsx
+                </a>
+              
+                
+                <a class="source" href="../hooks/useMoodStorage.html">
+                  src/hooks/useMoodStorage.ts
+                </a>
+              
+                
+                <a class="source" href="../main.html">
+                  src/main.tsx
+                </a>
+              
+                
+                <a class="source" href="../types/mood.html">
+                  src/types/mood.ts
+                </a>
+              
+                
+                <a class="source" href="../utils/moodHelpers.html">
+                  src/utils/moodHelpers.ts
+                </a>
+              
+                
+                <a class="source" href="../vite-env.d.html">
+                  src/vite-env.d.ts
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>DailyNote.tsx</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="sswrap ">
+                <a class="ss" href="#section-1">&#x00a7;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">MessageCircle</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;lucide-react&#x27;</span>;
+
+<span class="hljs-keyword">interface</span> <span class="hljs-title class_">DailyNoteProps</span> {
+  <span class="hljs-attr">note</span>: <span class="hljs-built_in">string</span>;
+  <span class="hljs-attr">onNoteChange</span>: <span class="hljs-function">(<span class="hljs-params">note: <span class="hljs-built_in">string</span></span>) =&gt;</span> <span class="hljs-built_in">void</span>;
+}
+
+<span class="hljs-keyword">const</span> <span class="hljs-title class_">DailyNote</span>: <span class="hljs-title class_">React</span>.<span class="hljs-property">FC</span>&lt;<span class="hljs-title class_">DailyNoteProps</span>&gt; = <span class="hljs-function">(<span class="hljs-params">{ note, onNoteChange }</span>) =&gt;</span> {
+  <span class="hljs-keyword">return</span> (
+    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;space-y-3&quot;</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;flex items-center space-x-2&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">MessageCircle</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;w-5 h-5 text-gray-600&quot;</span> /&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">h3</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;text-lg font-semibold text-gray-800&quot;</span>&gt;</span>
+          Daily Reflection
+        <span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+      
+      <span class="hljs-tag">&lt;<span class="hljs-name">textarea</span>
+        <span class="hljs-attr">value</span>=<span class="hljs-string">{note}</span>
+        <span class="hljs-attr">onChange</span>=<span class="hljs-string">{(e)</span> =&gt;</span> onNoteChange(e.target.value)}
+        placeholder=&quot;How was your day? What happened that influenced your mood?&quot;
+        className=&quot;
+          w-full p-4 border border-gray-200 rounded-lg resize-none
+          focus:ring-2 focus:ring-blue-500 focus:border-transparent
+          transition-all duration-200
+          placeholder-gray-400 text-gray-700
+        &quot;
+        rows={4}
+      /&gt;
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+};
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">DailyNote</span>;</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

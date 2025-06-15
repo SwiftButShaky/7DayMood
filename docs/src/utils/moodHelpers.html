@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>moodHelpers.ts</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="../../docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="../App.html">
+                  src/App.tsx
+                </a>
+              
+                
+                <a class="source" href="../components/DailyNote.html">
+                  src/components/DailyNote.tsx
+                </a>
+              
+                
+                <a class="source" href="../components/EditMoodModal.html">
+                  src/components/EditMoodModal.tsx
+                </a>
+              
+                
+                <a class="source" href="../components/MoodSelector.html">
+                  src/components/MoodSelector.tsx
+                </a>
+              
+                
+                <a class="source" href="../components/MoodTrendChart.html">
+                  src/components/MoodTrendChart.tsx
+                </a>
+              
+                
+                <a class="source" href="../components/SaveButton.html">
+                  src/components/SaveButton.tsx
+                </a>
+              
+                
+                <a class="source" href="../components/WeeklyOverview.html">
+                  src/components/WeeklyOverview.tsx
+                </a>
+              
+                
+                <a class="source" href="../hooks/useMoodStorage.html">
+                  src/hooks/useMoodStorage.ts
+                </a>
+              
+                
+                <a class="source" href="../main.html">
+                  src/main.tsx
+                </a>
+              
+                
+                <a class="source" href="../types/mood.html">
+                  src/types/mood.ts
+                </a>
+              
+                
+                <a class="source" href="moodHelpers.html">
+                  src/utils/moodHelpers.ts
+                </a>
+              
+                
+                <a class="source" href="../vite-env.d.html">
+                  src/vite-env.d.ts
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>moodHelpers.ts</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="sswrap ">
+                <a class="ss" href="#section-1">&#x00a7;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-comment">/**
+ * Utility functions for mood-related operations
+ * These functions provide consistent mood representation across the app
+ */</span>
+
+<span class="hljs-comment">/**
+ * Get the emoji representation for a mood level
+ * <span class="hljs-doctag">@param</span> <span class="hljs-variable">mood</span> - Mood level (1-5)
+ * <span class="hljs-doctag">@returns</span> Emoji string
+ */</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> getMoodEmoji = (<span class="hljs-attr">mood</span>: <span class="hljs-built_in">number</span>): <span class="hljs-function"><span class="hljs-params">string</span> =&gt;</span> {
+  <span class="hljs-keyword">const</span> moodEmojis = {
+    <span class="hljs-number">1</span>: <span class="hljs-string">&#x27;😢&#x27;</span>, <span class="hljs-comment">// Terrible - crying face</span>
+    <span class="hljs-number">2</span>: <span class="hljs-string">&#x27;😕&#x27;</span>, <span class="hljs-comment">// Bad - disappointed face</span>
+    <span class="hljs-number">3</span>: <span class="hljs-string">&#x27;😐&#x27;</span>, <span class="hljs-comment">// Okay - neutral face</span>
+    <span class="hljs-number">4</span>: <span class="hljs-string">&#x27;😊&#x27;</span>, <span class="hljs-comment">// Good - smiling face</span>
+    <span class="hljs-number">5</span>: <span class="hljs-string">&#x27;😄&#x27;</span>, <span class="hljs-comment">// Great - grinning face</span>
+  };
+  <span class="hljs-keyword">return</span> moodEmojis[mood <span class="hljs-keyword">as</span> keyof <span class="hljs-keyword">typeof</span> moodEmojis] || <span class="hljs-string">&#x27;❓&#x27;</span>;
+};
+
+<span class="hljs-comment">/**
+ * Get the background color class for a mood level
+ * <span class="hljs-doctag">@param</span> <span class="hljs-variable">mood</span> - Mood level (1-5)
+ * <span class="hljs-doctag">@returns</span> Tailwind CSS background color class
+ */</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> getMoodColor = (<span class="hljs-attr">mood</span>: <span class="hljs-built_in">number</span>): <span class="hljs-function"><span class="hljs-params">string</span> =&gt;</span> {
+  <span class="hljs-keyword">const</span> moodColors = {
+    <span class="hljs-number">1</span>: <span class="hljs-string">&#x27;bg-red-500&#x27;</span>,    <span class="hljs-comment">// Terrible - red</span>
+    <span class="hljs-number">2</span>: <span class="hljs-string">&#x27;bg-orange-500&#x27;</span>, <span class="hljs-comment">// Bad - orange</span>
+    <span class="hljs-number">3</span>: <span class="hljs-string">&#x27;bg-yellow-500&#x27;</span>, <span class="hljs-comment">// Okay - yellow</span>
+    <span class="hljs-number">4</span>: <span class="hljs-string">&#x27;bg-lime-500&#x27;</span>,   <span class="hljs-comment">// Good - lime green</span>
+    <span class="hljs-number">5</span>: <span class="hljs-string">&#x27;bg-green-500&#x27;</span>,  <span class="hljs-comment">// Great - green</span>
+  };
+  <span class="hljs-keyword">return</span> moodColors[mood <span class="hljs-keyword">as</span> keyof <span class="hljs-keyword">typeof</span> moodColors] || <span class="hljs-string">&#x27;bg-gray-300&#x27;</span>;
+};
+
+<span class="hljs-comment">/**
+ * Get the ring color class for a mood level (used for selection indicators)
+ * <span class="hljs-doctag">@param</span> <span class="hljs-variable">mood</span> - Mood level (1-5)
+ * <span class="hljs-doctag">@returns</span> Tailwind CSS ring color class
+ */</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> getMoodColorRing = (<span class="hljs-attr">mood</span>: <span class="hljs-built_in">number</span>): <span class="hljs-function"><span class="hljs-params">string</span> =&gt;</span> {
+  <span class="hljs-keyword">const</span> moodColors = {
+    <span class="hljs-number">1</span>: <span class="hljs-string">&#x27;ring-red-500&#x27;</span>,
+    <span class="hljs-number">2</span>: <span class="hljs-string">&#x27;ring-orange-500&#x27;</span>,
+    <span class="hljs-number">3</span>: <span class="hljs-string">&#x27;ring-yellow-500&#x27;</span>,
+    <span class="hljs-number">4</span>: <span class="hljs-string">&#x27;ring-lime-500&#x27;</span>,
+    <span class="hljs-number">5</span>: <span class="hljs-string">&#x27;ring-green-500&#x27;</span>,
+  };
+  <span class="hljs-keyword">return</span> moodColors[mood <span class="hljs-keyword">as</span> keyof <span class="hljs-keyword">typeof</span> moodColors] || <span class="hljs-string">&#x27;ring-gray-300&#x27;</span>;
+};
+
+<span class="hljs-comment">/**
+ * Get the text label for a mood level
+ * <span class="hljs-doctag">@param</span> <span class="hljs-variable">mood</span> - Mood level (1-5)
+ * <span class="hljs-doctag">@returns</span> <span class="hljs-variable">Human</span>-readable mood description
+ */</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> getMoodLabel = (<span class="hljs-attr">mood</span>: <span class="hljs-built_in">number</span>): <span class="hljs-function"><span class="hljs-params">string</span> =&gt;</span> {
+  <span class="hljs-keyword">const</span> moodLabels = {
+    <span class="hljs-number">1</span>: <span class="hljs-string">&#x27;Terrible&#x27;</span>,
+    <span class="hljs-number">2</span>: <span class="hljs-string">&#x27;Bad&#x27;</span>,
+    <span class="hljs-number">3</span>: <span class="hljs-string">&#x27;Okay&#x27;</span>,
+    <span class="hljs-number">4</span>: <span class="hljs-string">&#x27;Good&#x27;</span>,
+    <span class="hljs-number">5</span>: <span class="hljs-string">&#x27;Great&#x27;</span>,
+  };
+  <span class="hljs-keyword">return</span> moodLabels[mood <span class="hljs-keyword">as</span> keyof <span class="hljs-keyword">typeof</span> moodLabels] || <span class="hljs-string">&#x27;Unknown&#x27;</span>;
+};
+
+<span class="hljs-comment">/**
+ * Format a date string for display
+ * <span class="hljs-doctag">@param</span> <span class="hljs-variable">date</span> - Date string in YYYY-MM-DD format
+ * <span class="hljs-doctag">@returns</span> Formatted date string (e.g., &quot;Mon Jan 15&quot;)
+ */</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> formatDate = (<span class="hljs-attr">date</span>: <span class="hljs-built_in">string</span>): <span class="hljs-function"><span class="hljs-params">string</span> =&gt;</span> {
+  <span class="hljs-keyword">const</span> dateObj = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>(date);
+  <span class="hljs-keyword">return</span> dateObj.<span class="hljs-title function_">toLocaleDateString</span>(<span class="hljs-string">&#x27;en-US&#x27;</span>, {
+    <span class="hljs-attr">weekday</span>: <span class="hljs-string">&#x27;short&#x27;</span>, <span class="hljs-comment">// Mon, Tue, etc.</span>
+    <span class="hljs-attr">month</span>: <span class="hljs-string">&#x27;short&#x27;</span>,   <span class="hljs-comment">// Jan, Feb, etc.</span>
+    <span class="hljs-attr">day</span>: <span class="hljs-string">&#x27;numeric&#x27;</span>,   <span class="hljs-comment">// 1, 2, 3, etc.</span>
+  });
+};
+
+<span class="hljs-comment">/**
+ * Check if a date string represents today
+ * <span class="hljs-doctag">@param</span> <span class="hljs-variable">date</span> - Date string in YYYY-MM-DD format
+ * <span class="hljs-doctag">@returns</span> True if the date is today
+ */</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> isToday = (<span class="hljs-attr">date</span>: <span class="hljs-built_in">string</span>): <span class="hljs-function"><span class="hljs-params">boolean</span> =&gt;</span> {
+  <span class="hljs-keyword">const</span> today = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>().<span class="hljs-title function_">toISOString</span>().<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27;T&#x27;</span>)[<span class="hljs-number">0</span>];
+  <span class="hljs-keyword">return</span> date === today;
+};</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

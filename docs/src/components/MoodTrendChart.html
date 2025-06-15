@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>MoodTrendChart.tsx</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="../../docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="../App.html">
+                  src/App.tsx
+                </a>
+              
+                
+                <a class="source" href="DailyNote.html">
+                  src/components/DailyNote.tsx
+                </a>
+              
+                
+                <a class="source" href="EditMoodModal.html">
+                  src/components/EditMoodModal.tsx
+                </a>
+              
+                
+                <a class="source" href="MoodSelector.html">
+                  src/components/MoodSelector.tsx
+                </a>
+              
+                
+                <a class="source" href="MoodTrendChart.html">
+                  src/components/MoodTrendChart.tsx
+                </a>
+              
+                
+                <a class="source" href="SaveButton.html">
+                  src/components/SaveButton.tsx
+                </a>
+              
+                
+                <a class="source" href="WeeklyOverview.html">
+                  src/components/WeeklyOverview.tsx
+                </a>
+              
+                
+                <a class="source" href="../hooks/useMoodStorage.html">
+                  src/hooks/useMoodStorage.ts
+                </a>
+              
+                
+                <a class="source" href="../main.html">
+                  src/main.tsx
+                </a>
+              
+                
+                <a class="source" href="../types/mood.html">
+                  src/types/mood.ts
+                </a>
+              
+                
+                <a class="source" href="../utils/moodHelpers.html">
+                  src/utils/moodHelpers.ts
+                </a>
+              
+                
+                <a class="source" href="../vite-env.d.html">
+                  src/vite-env.d.ts
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>MoodTrendChart.tsx</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="sswrap ">
+                <a class="ss" href="#section-1">&#x00a7;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">TrendingUp</span>, <span class="hljs-title class_">TrendingDown</span>, <span class="hljs-title class_">Minus</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;lucide-react&#x27;</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">MoodEntry</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;../types/mood&#x27;</span>;
+<span class="hljs-keyword">import</span> { getMoodColor, getMoodEmoji, formatDate } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;../utils/moodHelpers&#x27;</span>;
+
+<span class="hljs-keyword">interface</span> <span class="hljs-title class_">MoodTrendChartProps</span> {
+  <span class="hljs-attr">weeklyMoods</span>: <span class="hljs-title class_">MoodEntry</span>[]; <span class="hljs-comment">// Array of mood entries for the past 7 days</span>
+}
+
+<span class="hljs-comment">/**
+ * Component that displays a line chart of mood trends over time
+ * Shows average mood, trend direction, and visual chart with data points
+ */</span>
+<span class="hljs-keyword">const</span> <span class="hljs-title class_">MoodTrendChart</span>: <span class="hljs-title class_">React</span>.<span class="hljs-property">FC</span>&lt;<span class="hljs-title class_">MoodTrendChartProps</span>&gt; = <span class="hljs-function">(<span class="hljs-params">{ weeklyMoods }</span>) =&gt;</span> {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="sswrap ">
+                <a class="ss" href="#section-2">&#x00a7;</a>
+              </div>
+              <p>Filter out days where no mood was logged (mood = 0)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">const</span> validMoods = weeklyMoods.<span class="hljs-title function_">filter</span>(<span class="hljs-function"><span class="hljs-params">entry</span> =&gt;</span> entry.<span class="hljs-property">mood</span> &gt; <span class="hljs-number">0</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="sswrap ">
+                <a class="ss" href="#section-3">&#x00a7;</a>
+              </div>
+              <p>If less than 2 data points, show placeholder message</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">if</span> (validMoods.<span class="hljs-property">length</span> &lt; <span class="hljs-number">2</span>) {
+    <span class="hljs-keyword">return</span> (
+      <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;bg-white rounded-xl shadow-sm border border-gray-100 p-6&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">h2</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;text-xl font-semibold text-gray-800 mb-4 text-center&quot;</span>&gt;</span>
+          Mood Trends
+        <span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;text-center text-gray-500 py-8&quot;</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">TrendingUp</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;w-12 h-12 mx-auto mb-3 text-gray-300&quot;</span> /&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Track your mood for a few days to see trends!<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+    );
+  }
+
+  <span class="hljs-comment">/**
+   * Calculate trend direction by comparing recent vs older mood averages
+   * Positive = mood improving, Negative = mood declining, ~0 = stable
+   */</span>
+  <span class="hljs-keyword">const</span> <span class="hljs-title function_">calculateTrend</span> = (<span class="hljs-params"></span>) =&gt; {
+    <span class="hljs-keyword">if</span> (validMoods.<span class="hljs-property">length</span> &lt; <span class="hljs-number">2</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="sswrap ">
+                <a class="ss" href="#section-4">&#x00a7;</a>
+              </div>
+              <p>Get the most recent 3 entries and the 3 before that</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">const</span> recent = validMoods.<span class="hljs-title function_">slice</span>(-<span class="hljs-number">3</span>);
+    <span class="hljs-keyword">const</span> older = validMoods.<span class="hljs-title function_">slice</span>(-<span class="hljs-number">6</span>, -<span class="hljs-number">3</span>);
+    
+    <span class="hljs-keyword">if</span> (older.<span class="hljs-property">length</span> === <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="sswrap ">
+                <a class="ss" href="#section-5">&#x00a7;</a>
+              </div>
+              <p>Calculate average mood for each period</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">const</span> recentAvg = recent.<span class="hljs-title function_">reduce</span>(<span class="hljs-function">(<span class="hljs-params">sum, entry</span>) =&gt;</span> sum + entry.<span class="hljs-property">mood</span>, <span class="hljs-number">0</span>) / recent.<span class="hljs-property">length</span>;
+    <span class="hljs-keyword">const</span> olderAvg = older.<span class="hljs-title function_">reduce</span>(<span class="hljs-function">(<span class="hljs-params">sum, entry</span>) =&gt;</span> sum + entry.<span class="hljs-property">mood</span>, <span class="hljs-number">0</span>) / older.<span class="hljs-property">length</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="sswrap ">
+                <a class="ss" href="#section-6">&#x00a7;</a>
+              </div>
+              <p>Return the difference (positive = improving, negative = declining)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">return</span> recentAvg - olderAvg;
+  };
+
+  <span class="hljs-keyword">const</span> trend = <span class="hljs-title function_">calculateTrend</span>();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="sswrap ">
+                <a class="ss" href="#section-7">&#x00a7;</a>
+              </div>
+              <p>Calculate overall average mood across all valid entries</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">const</span> averageMood = validMoods.<span class="hljs-title function_">reduce</span>(<span class="hljs-function">(<span class="hljs-params">sum, entry</span>) =&gt;</span> sum + entry.<span class="hljs-property">mood</span>, <span class="hljs-number">0</span>) / validMoods.<span class="hljs-property">length</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="sswrap ">
+                <a class="ss" href="#section-8">&#x00a7;</a>
+              </div>
+              <p>Get appropriate icon based on trend direction</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">const</span> <span class="hljs-title function_">getTrendIcon</span> = (<span class="hljs-params"></span>) =&gt; {
+    <span class="hljs-keyword">if</span> (trend &gt; <span class="hljs-number">0.3</span>) <span class="hljs-keyword">return</span> <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">TrendingUp</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;w-5 h-5 text-green-600&quot;</span> /&gt;</span></span>;
+    <span class="hljs-keyword">if</span> (trend &lt; -<span class="hljs-number">0.3</span>) <span class="hljs-keyword">return</span> <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">TrendingDown</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;w-5 h-5 text-red-600&quot;</span> /&gt;</span></span>;
+    <span class="hljs-keyword">return</span> <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Minus</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;w-5 h-5 text-gray-600&quot;</span> /&gt;</span></span>;
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="sswrap ">
+                <a class="ss" href="#section-9">&#x00a7;</a>
+              </div>
+              <p>Get descriptive text for trend</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">const</span> <span class="hljs-title function_">getTrendText</span> = (<span class="hljs-params"></span>) =&gt; {
+    <span class="hljs-keyword">if</span> (trend &gt; <span class="hljs-number">0.3</span>) <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Your mood is trending upward! 📈&quot;</span>;
+    <span class="hljs-keyword">if</span> (trend &lt; -<span class="hljs-number">0.3</span>) <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Your mood has been declining lately 📉&quot;</span>;
+    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Your mood has been stable 📊&quot;</span>;
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="sswrap ">
+                <a class="ss" href="#section-10">&#x00a7;</a>
+              </div>
+              <p>Get color class for trend text</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">const</span> <span class="hljs-title function_">getTrendColor</span> = (<span class="hljs-params"></span>) =&gt; {
+    <span class="hljs-keyword">if</span> (trend &gt; <span class="hljs-number">0.3</span>) <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;text-green-600&quot;</span>;
+    <span class="hljs-keyword">if</span> (trend &lt; -<span class="hljs-number">0.3</span>) <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;text-red-600&quot;</span>;
+    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;text-gray-600&quot;</span>;
+  };
+
+  <span class="hljs-keyword">const</span> maxMood = <span class="hljs-number">5</span>; <span class="hljs-comment">// Maximum mood value for chart scaling</span>
+  <span class="hljs-keyword">const</span> chartHeight = <span class="hljs-number">120</span>; <span class="hljs-comment">// Height of chart area in pixels</span>
+
+  <span class="hljs-keyword">return</span> (
+    &lt;div className=&quot;bg-white rounded-xl shadow-sm border border-gray-100 p-6&quot;&gt;
+      &lt;h2 className=&quot;text-xl font-semibold text-gray-800 mb-6 text-center&quot;&gt;
+        Mood Trends
+      &lt;/h2&gt;
+
+      {/* Chart Container */}
+      &lt;div className=&quot;mb-6&quot;&gt;
+        &lt;div className=&quot;relative&quot; style={{ height: chartHeight + 40 }}&gt;
+          {/* Y-axis labels (mood levels 1-5 with emojis) */}
+          &lt;div className=&quot;absolute left-0 top-0 h-full flex flex-col justify-between text-xs text-gray-500 pr-2&quot;&gt;
+            {[5, 4, 3, 2, 1].map(level =&gt; (
+              &lt;div key={level} className=&quot;flex items-center&quot;&gt;
+                &lt;span className=&quot;w-6 text-right&quot;&gt;{level}&lt;/span&gt;
+                &lt;span className=&quot;ml-1&quot;&gt;{getMoodEmoji(level)}&lt;/span&gt;
+              &lt;/div&gt;
+            ))}
+          &lt;/div&gt;
+
+          {/* Chart area with grid and data visualization */}
+          &lt;div className=&quot;ml-12 relative&quot; style={{ height: chartHeight }}&gt;
+            {/* Horizontal grid lines for each mood level */}
+            {[1, 2, 3, 4, 5].map(level =&gt; (
+              &lt;div
+                key={level}
+                className=&quot;absolute w-full border-t border-gray-100&quot;
+                style={{ 
+                  top: `${((maxMood - level) / (maxMood - 1)) * 100}%` 
+                }}
+              /&gt;
+            ))}
+
+            {/* SVG for drawing the line chart */}
+            &lt;svg className=&quot;absolute inset-0 w-full h-full&quot;&gt;
+              {/* Connect data points with a line */}
+              {validMoods.length &gt; 1 &amp;&amp; (
+                &lt;polyline
+                  fill=&quot;none&quot;
+                  stroke=&quot;#3B82F6&quot; // Blue color
+                  strokeWidth=&quot;3&quot;
+                  strokeLinecap=&quot;round&quot;
+                  strokeLinejoin=&quot;round&quot;
+                  points={validMoods.map((entry, index) =&gt; {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="sswrap ">
+                <a class="ss" href="#section-11">&#x00a7;</a>
+              </div>
+              <p>Calculate x position (spread evenly across width)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                    <span class="hljs-keyword">const</span> x = (index / (validMoods.<span class="hljs-property">length</span> - <span class="hljs-number">1</span>)) * <span class="hljs-number">100</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="sswrap ">
+                <a class="ss" href="#section-12">&#x00a7;</a>
+              </div>
+              <p>Calculate y position (inverted because SVG y=0 is top)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                    <span class="hljs-keyword">const</span> y = ((maxMood - entry.<span class="hljs-property">mood</span>) / (maxMood - <span class="hljs-number">1</span>)) * <span class="hljs-number">100</span>;
+                    <span class="hljs-keyword">return</span> <span class="hljs-string">`<span class="hljs-subst">${x}</span>%,<span class="hljs-subst">${y}</span>%`</span>;
+                  }).<span class="hljs-title function_">join</span>(<span class="hljs-string">&#x27; &#x27;</span>)}
+                /&gt;
+              )}
+
+              {<span class="hljs-comment">/* Individual data points */</span>}
+              {validMoods.<span class="hljs-title function_">map</span>(<span class="hljs-function">(<span class="hljs-params">entry, index</span>) =&gt;</span> {
+                <span class="hljs-keyword">const</span> x = (index / <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">max</span>(validMoods.<span class="hljs-property">length</span> - <span class="hljs-number">1</span>, <span class="hljs-number">1</span>)) * <span class="hljs-number">100</span>;
+                <span class="hljs-keyword">const</span> y = ((maxMood - entry.<span class="hljs-property">mood</span>) / (maxMood - <span class="hljs-number">1</span>)) * <span class="hljs-number">100</span>;
+                <span class="hljs-keyword">return</span> (
+                  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">g</span> <span class="hljs-attr">key</span>=<span class="hljs-string">{entry.date}</span>&gt;</span>
+                    {/* Outer circle (white with blue border) */}
+                    <span class="hljs-tag">&lt;<span class="hljs-name">circle</span>
+                      <span class="hljs-attr">cx</span>=<span class="hljs-string">{</span>`${<span class="hljs-attr">x</span>}%`}
+                      <span class="hljs-attr">cy</span>=<span class="hljs-string">{</span>`${<span class="hljs-attr">y</span>}%`}
+                      <span class="hljs-attr">r</span>=<span class="hljs-string">&quot;6&quot;</span>
+                      <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;fill-white stroke-blue-500 stroke-2&quot;</span>
+                    /&gt;</span>
+                    {/* Inner circle (colored based on mood) */}
+                    <span class="hljs-tag">&lt;<span class="hljs-name">circle</span>
+                      <span class="hljs-attr">cx</span>=<span class="hljs-string">{</span>`${<span class="hljs-attr">x</span>}%`}
+                      <span class="hljs-attr">cy</span>=<span class="hljs-string">{</span>`${<span class="hljs-attr">y</span>}%`}
+                      <span class="hljs-attr">r</span>=<span class="hljs-string">&quot;4&quot;</span>
+                      <span class="hljs-attr">className</span>=<span class="hljs-string">{getMoodColor(entry.mood).replace(</span>&#x27;<span class="hljs-attr">bg-</span>&#x27;, &#x27;<span class="hljs-attr">fill-</span>&#x27;)}
+                    /&gt;</span>
+                  <span class="hljs-tag">&lt;/<span class="hljs-name">g</span>&gt;</span></span>
+                );
+              })}
+            &lt;/svg&gt;
+
+            {<span class="hljs-comment">/* X-axis labels (dates) */</span>}
+            &lt;div className=<span class="hljs-string">&quot;absolute -bottom-8 left-0 right-0 flex justify-between text-xs text-gray-500&quot;</span>&gt;
+              {validMoods.<span class="hljs-title function_">map</span>(<span class="hljs-function">(<span class="hljs-params">entry, index</span>) =&gt;</span> (
+                <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">key</span>=<span class="hljs-string">{entry.date}</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;text-center&quot;</span>&gt;</span>
+                  {formatDate(entry.date).split(&#x27; &#x27;)[0]} {/* Show only day part */}
+                <span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span></span>
+              ))}
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      {<span class="hljs-comment">/* Statistics section */</span>}
+      &lt;div className=<span class="hljs-string">&quot;grid grid-cols-2 gap-4 pt-4 border-t border-gray-100&quot;</span>&gt;
+        {<span class="hljs-comment">/* Average mood display */</span>}
+        &lt;div className=<span class="hljs-string">&quot;text-center&quot;</span>&gt;
+          <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;text-2xl font-bold text-gray-800&quot;</span>&gt;</span>
+            {averageMood.toFixed(1)}
+          <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+          <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;text-sm text-gray-600&quot;</span>&gt;</span>Average Mood<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+        &lt;/div&gt;
+        
+        {<span class="hljs-comment">/* Trend indicator */</span>}
+        &lt;div className=<span class="hljs-string">&quot;text-center&quot;</span>&gt;
+          <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">{</span>`<span class="hljs-attr">flex</span> <span class="hljs-attr">items-center</span> <span class="hljs-attr">justify-center</span> <span class="hljs-attr">space-x-1</span> ${<span class="hljs-attr">getTrendColor</span>()}`}&gt;</span>
+            {getTrendIcon()}
+            <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;text-sm font-medium&quot;</span>&gt;</span>
+              {trend &gt; 0 ? &#x27;+&#x27; : &#x27;&#x27;}{trend.toFixed(1)}
+            <span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+          <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+          <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;text-sm text-gray-600&quot;</span>&gt;</span>Trend<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      {<span class="hljs-comment">/* Trend description */</span>}
+      &lt;div className={<span class="hljs-string">`mt-4 text-center text-sm font-medium <span class="hljs-subst">${getTrendColor()}</span>`</span>}&gt;
+        {<span class="hljs-title function_">getTrendText</span>()}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+};
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">MoodTrendChart</span>;</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
